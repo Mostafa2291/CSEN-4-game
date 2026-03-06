@@ -1,0 +1,16 @@
+package game.engine.cards;
+
+public class EnergyStealCard extends Card{
+    private final int energy;//read only
+
+    public EnergyStealCard(String name, String description, int rarity, boolean lucky, int energy) {
+        super(name, description, rarity, true);
+        this.energy = energy;
+    }
+
+    public int getEnergy() {
+        return energy;
+    }
+    
+
+}
