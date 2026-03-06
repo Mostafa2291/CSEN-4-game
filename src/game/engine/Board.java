@@ -2,45 +2,48 @@ package game.engine;
 
 import java.util.ArrayList;
 
+import game.engine.cards.Card;
 import game.engine.cells.Cell;
 import game.engine.monsters.Monster;
-import game.engine.cards.*;
 
 
 public class Board {
     //Read only
    private final Cell[][] boardCells;
-   private final ArrayList<Card> originalCards;
+   private static ArrayList<Card> originalCards; //removed final on purpose, as it cannot be initialised twice. (once in attribute and once in constructor)
 
    //Read & Write
-   private ArrayList<Monster> stationedMonsters;
-   private ArrayList<Card> cards;
+   private static ArrayList<Monster> stationedMonsters;
+   private static ArrayList<Card> cards;
 
    
-   public Board(Cell[][] boardCells, ArrayList<Card> originalCards, ArrayList<Monster> stationedMonsters,
-        ArrayList<Card> cards) {
-    this.boardCells = new Cell[Constants.BOARD_ROWS][Constants.BOARD_COLS];
-    this.originalCards = originalCards;
-    this.stationedMonsters = new ArrayList<Monster>();
-    this.cards = new ArrayList<Card>();
+   public Board(ArrayList<Card> readCards){
+    this.boardCells = new Cell [Constants.BOARD_ROWS][Constants.BOARD_COLS];
+
+    Board.stationedMonsters = new ArrayList<>();
+    Board.cards = new ArrayList<>();
+    Board.originalCards = readCards;
+
    }
-   public Cell[][] getBoardCells() {
+
+
+   public  Cell[][] getBoardCells() {
     return boardCells;
    }
-   public ArrayList<Card> getOriginalCards() {
+   public static ArrayList<Card> getOriginalCards() {
     return originalCards;
    }
-   public ArrayList<Monster> getStationedMonsters() {
+   public static ArrayList<Monster> getStationedMonsters() {
     return stationedMonsters;
    }
-   public void setStationedMonsters(ArrayList<Monster> stationedMonsters) {
-    this.stationedMonsters = stationedMonsters;
+   public static void setStationedMonsters(ArrayList<Monster> stationedMonsters) {
+    Board.stationedMonsters = stationedMonsters;
    }
-   public ArrayList<Card> getCards() {
+   public static ArrayList<Card> getCards() {
     return cards;
    }
-   public void setCards(ArrayList<Card> cards) {
-    this.cards = cards;
+   public static void setCards(ArrayList<Card> cards) {
+    Board.cards = cards;
    }
    
 
