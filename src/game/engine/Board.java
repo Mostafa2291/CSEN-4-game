@@ -14,7 +14,7 @@ public class Board {
 
    //Read & Write
    private static ArrayList<Monster> stationedMonsters;
-   private static ArrayList<Card> cards;
+   public static ArrayList<Card> cards;
 
    
    public Board(ArrayList<Card> readCards){
