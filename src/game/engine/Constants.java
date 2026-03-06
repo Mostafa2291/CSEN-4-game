@@ -17,7 +17,7 @@ public final class Constants {
 
     //Energy constants
     public static final int WINNING_ENERGY = 1000;
-    public static final int MIN_ENGERY = 0;
+    public static final int MIN_ENERGY = 0;
 
     //Monster constants
     public static final int MULTITASKER_BONUS = 200;
