@@ -2,10 +2,7 @@ package game.engine;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Random;
 
-import game.engine.cards.Card;
-import game.engine.cells.Cell;
 import game.engine.dataloader.DataLoader;
 import game.engine.monsters.Monster;
 
@@ -25,25 +22,30 @@ public class Game {
      //Game(Role playerRole) throws IOException{
 
     // }
+
+
 //constructor 
 public Game(Role playerRole) throws IOException{
-    //load data from csv files
-    ArrayList<Cell> cells = DataLoader.readCells();
-    Cell[][] boardCells = new Cell[Constants.BOARD_ROWS][Constants.BOARD_COLS];
-    for(int i = 0; i < Constants.BOARD_SIZE; i++){
-        boardCells[i / Constants.BOARD_COLS][i % Constants.BOARD_COLS] = cells.get(i);
-    }
-    ArrayList<Card> originalCards = DataLoader.readCards();
+    
+    //create board with loaded cards from csv
+    this.board = new Board(DataLoader.readCards());
+
+    //set all monsters with loaded monsters from csv
     allMonsters = DataLoader.readMonsters();
-    board = new Board(originalCards);
+
+    //random selection of player 
+     player = selectRandomMonsterByRole(playerRole);
+
+    //random selection of opponent
+    if(playerRole == Role.LAUGHER){ //assign opponent random scarer
+        opponent = selectRandomMonsterByRole(Role.SCARER);
+    }
+    else //assign opponent random laugher 
+        opponent = selectRandomMonsterByRole(Role.LAUGHER);
+
+    this.current = player;    
+
     
-    //select player and opponent monsters based on player role
-    player = selectRandomMonsterByRole(playerRole);
-    Role opponentRole = (playerRole == Role.LAUGHER) ? Role.SCARER : Role.LAUGHER;
-    opponent = selectRandomMonsterByRole(opponentRole);
-    
-    //set current monster to player by default
-    current = player;
 }
 
 
@@ -73,12 +75,18 @@ public Game(Role playerRole) throws IOException{
 
      
     private Monster selectRandomMonsterByRole(Role role){
-        ArrayList<Monster> candidates = new ArrayList<>();
-        for(Monster m : allMonsters){
-            if(m.getRole() == role) candidates.add(m);
+        int size = allMonsters.size();
+        ArrayList <Monster> matchingMonster = new ArrayList<>();
+        for (int i = 0; i < size; i++) { //add all monsters that match given role to matchingMonster arraylist
+            if(allMonsters.get(i).getRole() == role ){
+                matchingMonster.add(allMonsters.get(i));
+            }
         }
-        if(candidates.isEmpty()) return null;
-        return candidates.get(new Random().nextInt(candidates.size()));
+
+        int randomIndex = (int) (Math.random()* matchingMonster.size());
+
+        return matchingMonster.get(randomIndex);
+
     }
 
 
