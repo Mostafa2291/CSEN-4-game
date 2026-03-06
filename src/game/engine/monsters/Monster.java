@@ -86,9 +86,14 @@ public abstract class Monster implements Comparable <Monster> {
 
     public void setPosition(int position) { //added constraints where postion must be between 0-99
         if(position>= Constants.STARTING_POSITION &&
-        position<= Constants.WINNING_POSITION)
-            this.position = position;
-       
+        position<= Constants.WINNING_POSITION) 
+            {
+                this.position = position;
+            }
+        else
+            {
+                this.position = 100 - position;
+            }
     }
 
 
